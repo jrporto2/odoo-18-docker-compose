@@ -79,7 +79,7 @@ services:
       - ./datadrive/nginx/conf.d:/etc/nginx/conf.d
       - ./datadrive/nginx/certs:/etc/nginx/ssl
     depends_on:
-      odoo17:
+      odoo:
         condition: service_started
     networks:
       - internal_net
