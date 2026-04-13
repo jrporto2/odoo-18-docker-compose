@@ -2,10 +2,11 @@
 Quick Installation
 Install docker and docker-compose yourself, then run the following to set up first Odoo instance @ localhost:10018 (default master password: minhng.info):
 
-curl -s https://raw.githubusercontent.com/minhng92/odoo-18-docker-compose/master/run.sh | bash -s odoo-one 10018 20018
+curl -s https://raw.githubusercontent.com/jrporto2/odoo-18-docker-compose/master/run.sh | bash -s odoo-one 10018 20018
+ 
 and/or run the following to set up another Odoo instance @ localhost:11018 (default master password: minhng.info):
 
-curl -s https://raw.githubusercontent.com/minhng92/odoo-18-docker-compose/master/run.sh | bash -s odoo-two 11018 21018
+curl -s https://raw.githubusercontent.com/jrporto2/odoo-18-docker-compose/master/run.sh | bash -s odoo-two 11018 21018
 Some arguments:
 
 First argument (odoo-one): Odoo deploy folder
