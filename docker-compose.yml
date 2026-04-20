@@ -65,15 +65,6 @@ services:
       - ./datadrive/odoo/filestore:/var/lib/odoo/filestore
       - ./datadrive/odoo/sessions:/var/lib/odoo/sessions
       - ./datadrive/odoo/logs:/var/log/odoo
-    command: >
-      sh -c "
-      mkdir -p /var/lib/odoo/sessions &&
-      mkdir -p /var/log/odoo &&
-      chown -R odoo:odoo /var/lib/odoo &&
-      chown -R odoo:odoo /var/log/odoo &&
-      chown -R odoo:odoo /etc/odoo &&
-      exec su -c 'odoo --logfile=/dev/stdout' odoo
-      "
     networks:
       - internal_net
 
