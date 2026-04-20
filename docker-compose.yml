@@ -42,7 +42,6 @@ services:
   odoo:
     image: odoo:18
     container_name: c_odoo
-    user: root
     restart: unless-stopped
     depends_on:
       postgres:
