@@ -80,6 +80,7 @@ services:
       - ./datadrive/nginx/logs:/var/log/nginx
       - ./datadrive/nginx/conf.d:/etc/nginx/conf.d
       - ./datadrive/nginx/certs:/etc/nginx/ssl
+      - ./datadrive/nginx/nginx-cache:/var/cache/nginx 
     depends_on:
       odoo:
         condition: service_started
