@@ -10,7 +10,7 @@ rm -rf $DESTINATION
 # Clone Odoo directory
 git clone --depth=1 https://github.com/jrporto2/odoo-18-docker-compose.git $DESTINATION
 rm -rf $DESTINATION/.git
-mkdir -p $DESTINATION/datadrive/odoo/{addons,etc,filestore,logs}
+mkdir -p $DESTINATION/datadrive/odoo/{addons,etc,filestore,logsx,sessions}
 mkdir -p $DESTINATION/datadrive/nginx/{certs,conf.d,logs}
 mkdir -p $DESTINATION/datadrive/postgres/{db,custom-init-scripts}
 mkdir -p $DESTINATION/datadrive/pgadmin/data
