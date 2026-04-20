@@ -43,6 +43,7 @@ services:
     image: odoo:18
     container_name: c_odoo
     restart: unless-stopped
+    user: root
     depends_on:
       postgres:
         condition: service_healthy
