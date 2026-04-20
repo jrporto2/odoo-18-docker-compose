@@ -42,7 +42,7 @@ services:
   odoo:
     image: odoo:18
     container_name: c_odoo
-    user: odoo
+    user: root
     restart: unless-stopped
     depends_on:
       postgres:
@@ -54,7 +54,7 @@ services:
       - USER=${DB_USER}
       - PASSWORD=${DB_PASSWORD}
       - DB_NAME=${DB_NAME}
-      - LOGFILE=/etc/odoo/odoo-server.log
+      - LOGFILE=/dev/stdout
       - FILESTORE_PATH=/var/lib/odoo/filestore
     volumes:
       - /etc/timezone:/etc/timezone:ro
@@ -63,6 +63,17 @@ services:
       - ./datadrive/odoo/addons:/mnt/extra-addons
       - ./datadrive/odoo/etc:/etc/odoo
       - ./datadrive/odoo/filestore:/var/lib/odoo/filestore
+      - ./datadrive/odoo/sessions:/var/lib/odoo/sessions
+      - ./datadrive/odoo/logs:/var/log/odoo
+    command: >
+      sh -c "
+      mkdir -p /var/lib/odoo/sessions &&
+      mkdir -p /var/log/odoo &&
+      chown -R odoo:odoo /var/lib/odoo &&
+      chown -R odoo:odoo /var/log/odoo &&
+      chown -R odoo:odoo /etc/odoo &&
+      exec su -c 'odoo --logfile=/dev/stdout' odoo
+      "
     networks:
       - internal_net
 
