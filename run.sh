@@ -15,8 +15,11 @@ mkdir -p $DESTINATION/datadrive/nginx/{certs,conf.d,logs}
 mkdir -p $DESTINATION/datadrive/postgres/{db,custom-init-scripts}
 mkdir -p $DESTINATION/datadrive/pgadmin/data
 # Change ownership to current user and set restrictive permissions for security
-sudo chown -R $USER:$USER $DESTINATION
+#sudo chown -R $USER:$USER $DESTINATION
+sudo chown -R 101:101 $DESTINATION
 sudo chmod -R 700 $DESTINATION  # Only the user has access
+sudo chmod -R 755 ~/odoo-one/datadrive/odoo/sessions
+sudo chmod -R 755 ~/odoo-one/datadrive/odoo/filestore
 sudo scp /etc/ssl/certs/origin_certificate.pem $DESTINATION/datadrive/nginx/certs/origin_certificate.pem
 sudo scp /etc/ssl/certs/origin_private_key.pem $DESTINATION/datadrive/nginx/certs/origin_private_key.pem
 sudo chmod +x $DESTINATION/entrypoint.sh
