@@ -2,15 +2,17 @@
 set -e
 
 DB="$1"
-BACKUP_DIR="/opt/odoo-admin/backups"
 DATE=$(date +%F_%H-%M)
-LOG="/opt/odoo-admin/logs/actions.log"
+BACKUP_DIR="./datadrive/odoo-admin/backups"
+LOG="./datadrive/odoo-admin/logs/actions.log"
+PG_CONTAINER="c_postgres"
 
 mkdir -p "$BACKUP_DIR"
 
 echo "$(date) BACKUP_DB $DB" >> "$LOG"
 
-sudo -u postgres pg_dump "$DB" \
+docker exec "$PG_CONTAINER" \
+  pg_dump -U odoo "$DB" \
   > "$BACKUP_DIR/$DB-$DATE.sql"
 
 echo "Backup generado: $BACKUP_DIR/$DB-$DATE.sql"
