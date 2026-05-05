@@ -1,0 +1,22 @@
+#!/bin/bash
+set -e
+
+DB="$1"
+FILE="$2"
+LOG="/opt/odoo-admin/logs/actions.log"
+
+if [[ ! -f "$FILE" ]]; then
+  echo "Backup no existe"
+  exit 1
+fi
+
+echo "$(date) RESTORE_DB $DB FROM $FILE" >> "$LOG"
+
+sudo -u postgres dropdb --if-exists "$DB"
+sudo -u postgres createdb "$DB"
+
+sudo -u postgres psql "$DB" < "$FILE"
+
+sudo -u postgres psql -c "ALTER DATABASE \"$DB\" OWNER TO odoo"
+
+echo "Restauración completada"
