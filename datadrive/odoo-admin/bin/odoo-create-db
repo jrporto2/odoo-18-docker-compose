@@ -2,7 +2,7 @@
 set -e
 
 DB="$1"
-LOG="./datadrive/odoo-admin/logs/actions.log"
+LOG="DESTINATION/datadrive/odoo-admin/logs/actions.log"
 ODOO_CONTAINER="c_odoo"
 PG_CONTAINER="c_postgres"
 
