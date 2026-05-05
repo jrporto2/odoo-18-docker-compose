@@ -1,0 +1,20 @@
+#!/bin/bash
+set -e
+
+DB="$1"
+PROTECTED="/opt/odoo-admin/config/protected_dbs.conf"
+LOG="/opt/odoo-admin/logs/actions.log"
+
+if grep -qx "$DB" "$PROTECTED"; then
+  echo "Base protegida: $DB"
+  exit 1
+fi
+
+read -p "¿Seguro que deseas eliminar $DB? (yes): " CONFIRM
+[[ "$CONFIRM" == "yes" ]] || exit 1
+
+echo "$(date) DROP_DB $DB" >> "$LOG"
+
+sudo -u postgres dropdb "$DB"
+
+echo "Base eliminada"
