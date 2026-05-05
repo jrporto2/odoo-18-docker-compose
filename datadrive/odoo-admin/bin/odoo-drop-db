@@ -2,8 +2,9 @@
 set -e
 
 DB="$1"
-PROTECTED="/opt/odoo-admin/config/protected_dbs.conf"
-LOG="/opt/odoo-admin/logs/actions.log"
+PG_CONTAINER="c_postgres"
+PROTECTED="DESTINATION/datadrive/odoo-admin/config/protected_dbs.conf"
+LOG="DESTINATION/datadrive/odoo-admin/logs/actions.log"
 
 if grep -qx "$DB" "$PROTECTED"; then
   echo "Base protegida: $DB"
@@ -15,6 +16,6 @@ read -p "¿Seguro que deseas eliminar $DB? (yes): " CONFIRM
 
 echo "$(date) DROP_DB $DB" >> "$LOG"
 
-sudo -u postgres dropdb "$DB"
+docker exec "$PG_CONTAINER" dropdb -U odoo "$DB"
 
 echo "Base eliminada"
