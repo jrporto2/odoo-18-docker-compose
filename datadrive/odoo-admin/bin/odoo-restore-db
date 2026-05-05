@@ -3,7 +3,8 @@ set -e
 
 DB="$1"
 FILE="$2"
-LOG="/opt/odoo-admin/logs/actions.log"
+PG_CONTAINER="c_postgres"
+LOG="DESTINATION/datadrive/odoo-admin/logs/actions.log"
 
 if [[ ! -f "$FILE" ]]; then
   echo "Backup no existe"
@@ -12,11 +13,9 @@ fi
 
 echo "$(date) RESTORE_DB $DB FROM $FILE" >> "$LOG"
 
-sudo -u postgres dropdb --if-exists "$DB"
-sudo -u postgres createdb "$DB"
+docker exec "$PG_CONTAINER" dropdb -U odoo --if-exists "$DB"
+docker exec "$PG_CONTAINER" createdb -U odoo "$DB"
 
-sudo -u postgres psql "$DB" < "$FILE"
-
-sudo -u postgres psql -c "ALTER DATABASE \"$DB\" OWNER TO odoo"
+cat "$FILE" | docker exec -i "$PG_CONTAINER" psql -U odoo "$DB"
 
 echo "Restauración completada"
