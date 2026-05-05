@@ -2,9 +2,10 @@
 set -e
 
 DB="$1"
-LOG="/opt/odoo-admin/logs/actions.log"
+LOG="./datadrive/odoo-admin/logs/actions.log"
+ODOO_CONTAINER="c_odoo"
+PG_CONTAINER="c_postgres"
 
-# Validación fuerte
 if [[ ! "$DB" =~ ^[a-zA-Z0-9_]{3,30}$ ]]; then
   echo "Nombre de base inválido"
   exit 1
@@ -12,14 +13,14 @@ fi
 
 echo "$(date) CREATE_DB $DB" >> "$LOG"
 
-sudo -u postgres createdb "$DB"
-sudo -u postgres psql -c "ALTER DATABASE \"$DB\" OWNER TO odoo"
+# Crear BD en PostgreSQL
+docker exec "$PG_CONTAINER" createdb -U odoo "$DB"
 
-sudo -u odoo /usr/bin/odoo \
+# Inicializar Odoo
+docker exec "$ODOO_CONTAINER" odoo \
   -d "$DB" \
   -i base \
   --without-demo=all \
-  --stop-after-init \
-  -c /opt/odoo-admin/config/odoo.conf
+  --stop-after-init
 
 echo "Base creada correctamente: $DB"
