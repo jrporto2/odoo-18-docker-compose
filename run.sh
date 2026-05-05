@@ -20,6 +20,7 @@ sudo chown -R 101:101 $DESTINATION
 sudo chmod -R 755 $DESTINATION  # Only the user has access
 sudo chmod -R 755 $DESTINATION/datadrive/odoo/sessions
 sudo chmod -R 755 $DESTINATION/datadrive/odoo/filestore
+sudo chmod -R 750 $DESTINATION/datadrive/odoo-admin/bin/
 sudo scp /etc/ssl/certs/origin_certificate.pem $DESTINATION/datadrive/nginx/certs/origin_certificate.pem
 sudo scp /etc/ssl/certs/origin_private_key.pem $DESTINATION/datadrive/nginx/certs/origin_private_key.pem
 sudo chmod +x $DESTINATION/entrypoint.sh
