@@ -3,8 +3,8 @@ set -e
 
 DB="$1"
 DATE=$(date +%F_%H-%M)
-BACKUP_DIR="./datadrive/odoo-admin/backups"
-LOG="./datadrive/odoo-admin/logs/actions.log"
+BACKUP_DIR="DESTINATION/datadrive/odoo-admin/backups"
+LOG="DESTINATION/datadrive/odoo-admin/logs/actions.log"
 PG_CONTAINER="c_postgres"
 
 mkdir -p "$BACKUP_DIR"
