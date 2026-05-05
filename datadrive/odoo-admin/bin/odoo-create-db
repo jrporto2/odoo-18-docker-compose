@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+
+DB="$1"
+LOG="/opt/odoo-admin/logs/actions.log"
+
+# Validación fuerte
+if [[ ! "$DB" =~ ^[a-zA-Z0-9_]{3,30}$ ]]; then
+  echo "Nombre de base inválido"
+  exit 1
+fi
+
+echo "$(date) CREATE_DB $DB" >> "$LOG"
+
+sudo -u postgres createdb "$DB"
+sudo -u postgres psql -c "ALTER DATABASE \"$DB\" OWNER TO odoo"
+
+sudo -u odoo /usr/bin/odoo \
+  -d "$DB" \
+  -i base \
+  --without-demo=all \
+  --stop-after-init \
+  -c /opt/odoo-admin/config/odoo.conf
+
+echo "Base creada correctamente: $DB"
