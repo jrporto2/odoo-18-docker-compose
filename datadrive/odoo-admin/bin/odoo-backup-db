@@ -1,0 +1,16 @@
+#!/bin/bash
+set -e
+
+DB="$1"
+BACKUP_DIR="/opt/odoo-admin/backups"
+DATE=$(date +%F_%H-%M)
+LOG="/opt/odoo-admin/logs/actions.log"
+
+mkdir -p "$BACKUP_DIR"
+
+echo "$(date) BACKUP_DB $DB" >> "$LOG"
+
+sudo -u postgres pg_dump "$DB" \
+  > "$BACKUP_DIR/$DB-$DATE.sql"
+
+echo "Backup generado: $BACKUP_DIR/$DB-$DATE.sql"
